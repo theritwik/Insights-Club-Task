@@ -56,8 +56,4 @@ This is a JavaScript-based interactive quiz application with:
 2. Open the `quiz.html` file in a browser.
 3. Answer the questions within the time limit or let the timer move to the next question.
 4. View your score at the end and use the restart button to try again.
-
-### Screenshots
-Include screenshots of the homepage, quiz interface, and the final score display (if possible).
-
 ---
