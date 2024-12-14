@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Web App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1rem 0;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        .form-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #555;
+        }
+        .welcome {
+            margin-top: 20px;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="signup.html">Signup</a>
+        </nav>
+    </header>
+
+    <main id="content">
+        <h1>Welcome to the Simple Web App</h1>
+        <p>Navigate through the Login or Signup pages to explore our features.</p>
+    </main>
+
+    <!-- Login Page -->
+    <script id="login-page" type="text/html">
+        <div class="form-container">
+            <h2>Login</h2>
+            <form id="login-form">
+                <input type="email" id="login-email" placeholder="Enter your email" required>
+                <input type="password" id="login-password" placeholder="Enter your password" minlength="6" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </script>
+
+    <!-- Signup Page -->
+    <script id="signup-page" type="text/html">
+        <div class="form-container">
+            <h2>Signup</h2>
+            <form id="signup-form">
+                <input type="text" id="signup-username" placeholder="Enter your username" required>
+                <input type="email" id="signup-email" placeholder="Enter your email" required>
+                <input type="password" id="signup-password" placeholder="Enter your password" minlength="6" required>
+                <button type="submit">Signup</button>
+            </form>
+        </div>
+    </script>
+
+    <!-- Welcome Page -->
+    <script id="welcome-page" type="text/html">
+        <div class="welcome">Welcome! You have successfully logged in.</div>
+    </script>
+
+    <script>
+        // Navigation event listeners
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = link.getAttribute('href').replace('.html', '');
+                loadPage(page);
+            });
+        });
+
+        // Load page function
+        function loadPage(page) {
+            const template = document.getElementById(`${page}-page`);
+            const content = document.getElementById('content');
+            if (template) {
+                content.innerHTML = template.innerHTML;
+                if (page === 'login') setupLogin();
+                if (page === 'signup') setupSignup();
+            }
+        }
+
+        // Setup login form
+        function setupLogin() {
+            const loginForm = document.getElementById('login-form');
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                if (validateEmail(email) && password.length >= 6) {
+                    loadPage('welcome');
+                } else {
+                    alert('Invalid email or password.');
+                }
+            });
+        }
+
+        // Setup signup form
+        function setupSignup() {
+            const signupForm = document.getElementById('signup-form');
+            signupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                if (validateEmail(email) && password.length >= 6) {
+                    alert('Signup successful! Please login.');
+                    loadPage('login');
+                } else {
+                    alert('Invalid email or password.');
+                }
+            });
+        }
+
+        // Email validation function
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Load default page
+        loadPage('home');
+    </script>
+</body>
+</html>
