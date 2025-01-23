@@ -1,4 +1,4 @@
-# Web_Dev-repo
+# Insights Club Task
 # README
 
 ## Simple Web Application
